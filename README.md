@@ -1,6 +1,6 @@
 # GD Discord BOT
-Egy egyszerű **GD BOT** ami szimplán csak értesít hogy milyen órád lesz.
-Megtagel mindenkit vagy azt a csoportot kinek órája van.
+A simple bot **GD BOT** which just tags you and notifies you on Discord in a specific channel.
+Tags you or your group who has lesson.
 
 # How it works?
 In a .js file we have the whole timetable. (Now just for my class 12E but we plan it to add others)
