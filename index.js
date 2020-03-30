@@ -48,7 +48,7 @@ client.on("ready", () => {
 });
 
 client.on("message", msg => {
-  const ch = msg.channel == "bot";
+  const ch = msg.channel.name == "bot";
   const mbrole = msg.member.roles.cache.some(role => role.name === "Diák");
   if (ch && mbrole) {
     if (msg.content.startsWith(prefix + "clearchat")) {
