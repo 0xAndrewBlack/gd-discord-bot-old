@@ -48,6 +48,27 @@ client.on("ready", () => {
 });
 
 client.on("message", msg => {
+  const ch = msg.channel == "bot";
+  const mbrole = msg.member.roles.cache.some(role => role.name === "Diák");
+  if (ch && mbrole) {
+    if (msg.content.startsWith(prefix + "clearchat")) {
+      console.log(`Chat törlés by ${msg.author.name}`);
+      async function clear() {
+        let fetched;
+        msg.delete();
+        fetched = await msg.channel.messages.fetch({ limit: 10 });
+        msg.channel.bulkDelete(fetched);
+      }
+      clear();
+    } else {
+      console.log("Nem szabad");
+    }
+    if (msg.member.roles.cache.some(role => role.name === "Diák")) {
+      msg.channel.send(`Csá ${msg.author}`);
+    } else {
+      console.log("Nem szabad");
+    }
+  }
   console.log(`[LOG] ${msg.author.username}: ${msg.content}`);
 });
 
