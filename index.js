@@ -48,7 +48,7 @@ client.on("ready", () => {
 });
 
 client.on("message", msg => {
-  const ch = msg.channel.name == "bot";
+  const ch = msg.channel.name == "bot-dev" || "bot";
   const mbrole = msg.member.roles.cache.some(role => role.name === "Diák");
   if (ch && mbrole) {
     if (msg.content.startsWith(prefix + "clearchat")) {
@@ -63,7 +63,7 @@ client.on("message", msg => {
     } else {
       console.log("Nem szabad");
     }
-    if (msg.member.roles.cache.some(role => role.name === "Diák")) {
+    if (mbrole) {
       msg.channel.send(`Csá ${msg.author}`);
     } else {
       console.log("Nem szabad");
