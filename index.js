@@ -16,16 +16,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + "/public"));
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.render("index");
 });
-app.get("/classes", function(req, res) {
-  res
-    .status("200")
-    .send("Classes: *")
-    .json();
+app.get("/classes", function (req, res) {
+  res.status("200").send("Classes: *").json();
 });
-app.get("/classes/:id", function(req, res) {
+app.get("/classes/:id", function (req, res) {
   const query = req.params.id;
   if (query < classes.length) {
     res.status(200).json(classes[query]);
@@ -34,12 +31,12 @@ app.get("/classes/:id", function(req, res) {
   }
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error("Nem található!");
   err.status = 404;
   next(err);
 });
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.send(err.message);
 });
@@ -47,13 +44,13 @@ app.use(function(err, req, res, next) {
 client.once("ready", () => {
   client.user.setStatus("idle");
   client.user.setActivity("Pihen", {
-    type: "PLAYING"
+    type: "PLAYING",
   });
   console.log("BOT is ready!");
 });
 
 client.on("ready", () => {
-  const channel = client.channels.cache.find(ch => ch.name === "bot-dev");
+  const channel = client.channels.cache.find((ch) => ch.name === "bot-dev");
   console.log(`Órarend: ${Object.keys(orak)}`);
   console.log(`Órarend első nap: ${Object.keys(orak[1])}`);
   console.log(`Órarend elsőnap első órája: ${orak[1][1].ora}`);
@@ -74,9 +71,9 @@ client.on("ready", () => {
   job.start();
 });
 
-client.on("message", msg => {
-  const ch = msg.channel.name == "bot";
-  const mbrole = msg.member.roles.cache.some(role => role.name === "Diák");
+client.on("message", (msg) => {
+  const ch = msg.channel.name == "bot-dev" || "bot";
+  const mbrole = msg.member.roles.cache.some((role) => role.name === "Diák");
 
   if (ch && mbrole) {
     if (msg.content.startsWith(prefix + "clearchat")) {
