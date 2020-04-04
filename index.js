@@ -1,14 +1,48 @@
 const { prefix, token } = require("./config.js");
+const { orak } = require("./orak.js");
+const classes = require("./classes.js");
+const bodyParser = require("body-parser");
+const express = require("express");
+const app = express();
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const CronJob = require("cron").CronJob;
+const cron = require("node-cron");
 
-const date = require("date-and-time");
-const { orak } = require("./orak.js");
-
-const channel = client.channels.cache.find(ch => ch.name === "tantargy");
-const pattern = date.compile("HH:mm");
 const now = new Date();
-date.format(now, pattern);
+const PORT = process.env.PORT || 5000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(__dirname + "/public"));
+
+app.get("/", function(req, res) {
+  res.render("index");
+});
+app.get("/classes", function(req, res) {
+  res
+    .status("200")
+    .send("Classes: *")
+    .json();
+});
+app.get("/classes/:id", function(req, res) {
+  const query = req.params.id;
+  if (query < classes.length) {
+    res.status(200).json(classes[query]);
+  } else {
+    res.status(404).json("Class with ID:" + query + " not found!");
+  }
+});
+
+app.use(function(req, res, next) {
+  var err = new Error("Nem található!");
+  err.status = 404;
+  next(err);
+});
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.send(err.message);
+});
 
 client.once("ready", () => {
   client.user.setStatus("idle");
@@ -19,37 +53,31 @@ client.once("ready", () => {
 });
 
 client.on("ready", () => {
-  const oranap = orak[0];
-  const oraora = orak[1][1].ora;
-  const oracsop = orak[1][1].csoport;
-  const orakezdes = orak[1][1].kezdodik;
-  const mainap = now.getDay().toLocaleString();
-  const most = `${now.getHours()}:${now.getMinutes()}`;
+  const channel = client.channels.cache.find(ch => ch.name === "bot-dev");
+  console.log(`Órarend: ${Object.keys(orak)}`);
+  console.log(`Órarend első nap: ${Object.keys(orak[1])}`);
+  console.log(`Órarend elsőnap első órája: ${orak[1][1].ora}`);
+  console.log(
+    `Órarend elsőnap első óra kezdése: ${orak[1][1].k_ora}:${orak[1][1].k_perc}`
+  );
 
-  if (mainap != oranap && orakezdes != most) {
-    console.log(
-      `Nap: ${mainap}, Csop.: ${oracsop}, Óra: ${oraora}, Kezdődik: ${orakezdes}, Dev: ${most}`
-    );
-  }
-
-  setInterval(() => {
-    if (mainap == orak[1][1]) {
-      console.log("Hétfő yee");
-    } else if (mainap == 2) {
-      console.log("Kedd yee");
-    } else if (mainap == 3) {
-      console.log("Szerda yee");
-    } else if (mainap == 4) {
-      console.log("Csütörtök yee");
-    } else if (mainap == 5) {
-      console.log("Péntek yee");
-    }
-  }, 5000);
+  job = new CronJob(
+    `* ${orak[1][1].k_perc} ${orak[1][1].k_ora} * * ${orak[1][1].nap}`,
+    () => {
+      console.log(`${orak[1][1].ora} óra van!`);
+      channel.send(`${orak[1][1].ora} óra van!`);
+      job.stop();
+    },
+    null,
+    true
+  );
+  job.start();
 });
 
 client.on("message", msg => {
   const ch = msg.channel.name == "bot";
   const mbrole = msg.member.roles.cache.some(role => role.name === "Diák");
+
   if (ch && mbrole) {
     if (msg.content.startsWith(prefix + "clearchat")) {
       console.log(`Chat törlés by ${msg.author.name}`);
@@ -63,13 +91,9 @@ client.on("message", msg => {
     } else {
       console.log("Nem szabad");
     }
-    if (msg.member.roles.cache.some(role => role.name === "Diák")) {
-      msg.channel.send(`Csá ${msg.author}`);
-    } else {
-      console.log("Nem szabad");
-    }
   }
   console.log(`[LOG] ${msg.author.username}: ${msg.content}`);
 });
 
 client.login(token);
+app.listen(PORT, () => console.log("Web server & API is running."));
