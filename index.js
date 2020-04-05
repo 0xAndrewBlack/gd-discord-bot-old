@@ -1,15 +1,14 @@
 const { prefix, token } = require("./config.js");
-const { orak } = require("./orak.js");
-const classes = require("./classes.js");
+const orak = require("./orak.js");
+const classes = require("./orak.js");
 const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
 const Discord = require("discord.js");
-const client = new Discord.Client();
 const CronJob = require("cron").CronJob;
-const cron = require("node-cron");
 
-const now = new Date();
+const client = new Discord.Client();
+
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
@@ -24,7 +23,7 @@ app.get("/classes", function (req, res) {
 });
 app.get("/classes/:id", function (req, res) {
   const query = req.params.id;
-  if (query < classes.length) {
+  if (query < orak.length) {
     res.status(200).json(classes[query]);
   } else {
     res.status(404).json("Class with ID:" + query + " not found!");
@@ -51,24 +50,7 @@ client.once("ready", () => {
 
 client.on("ready", () => {
   const channel = client.channels.cache.find((ch) => ch.name === "bot-dev");
-  console.log(`Órarend: ${Object.keys(orak)}`);
-  console.log(`Órarend első nap: ${Object.keys(orak[1])}`);
-  console.log(`Órarend elsőnap első órája: ${orak[1][1].ora}`);
-  console.log(
-    `Órarend elsőnap első óra kezdése: ${orak[1][1].k_ora}:${orak[1][1].k_perc}`
-  );
-
-  job = new CronJob(
-    `* ${orak[1][1].k_perc} ${orak[1][1].k_ora} * * ${orak[1][1].nap}`,
-    () => {
-      console.log(`${orak[1][1].ora} óra van!`);
-      channel.send(`${orak[1][1].ora} óra van!`);
-      job.stop();
-    },
-    null,
-    true
-  );
-  job.start();
+  /* Implement Timetable API Check */
 });
 
 client.on("message", (msg) => {
@@ -91,6 +73,9 @@ client.on("message", (msg) => {
   }
   console.log(`[LOG] ${msg.author.username}: ${msg.content}`);
 });
+
+client.on("error", (e) => console.error(e));
+client.on("warn", (e) => console.warn(e));
 
 client.login(token);
 app.listen(PORT, () => console.log("Web server & API is running."));
