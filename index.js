@@ -1,6 +1,6 @@
 const { prefix, token } = require("./config.js");
 const orak = require("./orak.js");
-const classes = require("./orak.js");
+const classes = require("./classes.js");
 const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
