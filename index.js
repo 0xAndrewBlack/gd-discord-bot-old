@@ -3,8 +3,8 @@ const { prefix, token } = require("./config.js");
 const Discord = require("discord.js");
 const schedule = require("node-schedule");
 
-const lessons = require("./lessons.js");
-const classes = require("./classes.js");
+const lessons = require("./resources/lessons.js");
+const classes = require("./resources/classes.js");
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
