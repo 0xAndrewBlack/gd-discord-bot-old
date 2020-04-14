@@ -17,15 +17,17 @@ Hosted on heroku with a simple worker.
 
 # Commands
 
-|   Command    | Description                       | Implemented | Syntax                   | Response                 |
-| :----------: | --------------------------------- | ----------- | ------------------------ | ------------------------ |
-|     help     | Shows help                        | ✅          | help <command>           | Embed with summary.      |
-|  clearchat   | clearing messages                 | ✅          | clearchat or clearchat n | N/A                      |
-|    reload    | reload a command                  | ✅          | reload <command>         | Command reloaded.        |
-|     ping     | Dev Command                       | ✅          | ping                     | BOT: Pong!               |
-|    getOra    | Get a specific class              | ❌          | getora <ora>             | Matek will start at 8:00 |
-| getTimeTable | Get the full timetable of a class | ❌          | getTimeTable <12E:ID>    | {timetable}              |
-|  checkClass  | Checks if a class is present      | ❌          | checkClass <12E>         | Yes, Matek óra van.      |
+> Note: Prefix is: /
+
+|   Command    | Description                       | Implementation | Command Syntax             | Response                    |
+| :----------: | --------------------------------- | -------------- | -------------------------- | --------------------------- |
+|     help     | Shows help                        | ✅             | help <command>             | Embed with summary.         |
+|  clearchat   | clearing messages                 | ✅             | clearchat or clearchat <n> | N/A                         |
+|    reload    | reload a command                  | ✅             | reload <command>           | Command reloaded.           |
+|     ping     | Dev Command                       | ✅             | ping                       | BOT: Pong!                  |
+|    getOra    | Get a specific class              | ❌             | getora <lesson>            | <Lesson> will start at 8:00 |
+| getTimeTable | Get the full timetable of a class | ❌             | getTimeTable <12E:ID>      | {timetable}                 |
+|  checkClass  | Checks if a class is present      | ❌             | checkClass <12E>           | Yes, <Lesson> óra van.      |
 
 ## Collaborate
 
