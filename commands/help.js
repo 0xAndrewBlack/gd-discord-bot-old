@@ -54,7 +54,7 @@ module.exports = {
     data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
     const exampleEmbed = new Discord.MessageEmbed()
-      .setColor("#0099ff")
+      .setColor("#226699")
       .setTitle(`Command:${command.name}`)
       .setDescription(`Description: ${command.description}`)
       .setTimestamp()

@@ -2,7 +2,7 @@ module.exports = {
   name: "reload",
   description: "Reloads a command",
   execute(msg, args) {
-    const commandName = args[0].toLowerCase();
+    /*const commandName = args[0].toLowerCase();
     const command =
       msg.client.commands.get(commandName) ||
       msg.client.commands.find(
@@ -26,6 +26,6 @@ module.exports = {
         `There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``
       );
     }
-    msg.channel.send(`Command \`${command.name}\` was reloaded!`);
+    msg.channel.send(`Command \`${command.name}\` was reloaded!`);*/
   },
 };
