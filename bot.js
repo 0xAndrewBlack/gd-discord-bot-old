@@ -31,7 +31,7 @@ client.on("ready", () => {
   const rule = new schedule.RecurrenceRule();
   for (let i = 1; i <= Object.keys(lessons).length; i++) {
     for (let j = 1; j <= Object.keys(lessons[i]).length; j++) {
-      rule.tz = "";
+      rule.tz = "UTC+2";
       rule.dayOfWeek = i;
       rule.hour = lessons[i][j].k_ora;
       rule.minute = Number(lessons[i][j].k_perc) - 5;
@@ -64,7 +64,6 @@ client.on("ready", () => {
           ch.send(embed_csop);
         }
       });
-      // console.log(rule.nextInvocationDate());
     }
   }
 });
