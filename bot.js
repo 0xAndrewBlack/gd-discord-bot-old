@@ -31,7 +31,7 @@ client.on("ready", () => {
   const rule = new schedule.RecurrenceRule();
   for (let i = 1; i <= Object.keys(lessons).length; i++) {
     for (let j = 1; j <= Object.keys(lessons[i]).length; j++) {
-      rule.tz = "UTC+2";
+      rule.tz = "Europe/Budapest";
       rule.dayOfWeek = i;
       rule.hour = lessons[i][j].k_ora;
       rule.minute = Number(lessons[i][j].k_perc) - 5;
