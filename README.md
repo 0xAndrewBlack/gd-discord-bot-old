@@ -1,5 +1,7 @@
 > **Note: It's "open-source" but thats doesn't mean that you can copy n paste and "steal" it! Thanks. Add me on discord or DM me on IG if you have any questions.**
 
+<img align="right" src="http://gdszeged.hu/sites/default/files/storage/logo_gd.png" height="196" width="196">
+
 # GD Discord BOT
 
 A simple bot **GD BOT** which just tags you and notifies you on Discord in a specific channel.
