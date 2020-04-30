@@ -7,7 +7,7 @@ module.exports = {
   aliases: ["commands"],
   usage: "[command name]",
   cooldown: 5,
-  execute(msg, args) {
+  execute(client, msg, args) {
     const data = [];
     const { commands } = msg.client;
 
@@ -60,6 +60,6 @@ module.exports = {
       .setTimestamp()
       .setFooter("GD Discord BOT (c) Andrew Black");
 
-    msg.channel.send(exampleEmbed);
+    msg.channel.send(exampleEmbed).then((m) => m.delete(420));
   },
 };

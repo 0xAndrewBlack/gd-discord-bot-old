@@ -23,7 +23,7 @@ client.once("ready", () => {
   client.user.setActivity("Pihen.", {
     type: "PLAYING",
   });
-  console.log("BOT is ready!");
+  console.log(`${client.user.username} is ready!`);
 });
 
 client.on("ready", () => {
@@ -69,17 +69,21 @@ client.on("ready", () => {
 });
 
 client.on("message", (msg) => {
-  console.log(`[LOG] ${msg.author.username}: ${msg.content}`);
-
   let args = msg.content.substring(prefix.length).split(" ");
   const command = args.shift().toLowerCase();
 
+  if (!msg.author.bot)
+    console.log(`[LOG] ${msg.author.username}: ${msg.content}`);
+  if (msg.channel.type == "dm") return;
   if (!msg.content.startsWith(prefix) || msg.author.bot) return;
-  if (!client.commands.has(command)) return;
+  if (!client.commands.has(command))
+    return msg.channel.send("Command not found").then((m) => m.delete(420));
   try {
-    client.commands.get(command).execute(msg, args);
+    client.commands.get(command).execute(client, msg, args);
   } catch (error) {
-    msg.channel.send("Command not executed or implemented nor found!");
+    msg.channel
+      .send(`Command not executed or implemented nor found! \nError: ${error}`)
+      .then((m) => m.delete(420));
   }
 });
 
