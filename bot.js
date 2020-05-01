@@ -72,8 +72,7 @@ client.on("message", (msg) => {
   let args = msg.content.substring(prefix.length).split(" ");
   const command = args.shift().toLowerCase();
 
-  if (!msg.author.bot)
-    console.log(`[LOG] ${msg.author.username}: ${msg.content}`);
+  if (!msg.author.bot) console.log(`${msg.author.username}: ${msg.content}`);
   if (msg.channel.type == "dm") return;
   if (!msg.content.startsWith(prefix) || msg.author.bot) return;
   if (!client.commands.has(command))

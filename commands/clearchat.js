@@ -2,7 +2,7 @@ module.exports = {
   name: "clearchat",
   description: "Removes message by n",
   execute(client, msg, args) {
-    console.log(`[LOG] Chat törlés by ${msg.author}`);
+    console.log(`Chat törlés by ${msg.author}`);
     if (isFinite(args) && args.length > 0) {
       if (Number(args) <= 25) {
         const del_limit = Number(args) + 1;
